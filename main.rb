@@ -320,6 +320,10 @@ post '/form_player_quit' do
   redirect '/'
 end
 
+post '/form_playitagainsam' do
+  redirect '/start_game'
+end
+
 not_found do
   "Somehow you fell thru to me..there are no matching routes."
 end

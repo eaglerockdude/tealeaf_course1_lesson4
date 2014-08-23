@@ -72,8 +72,12 @@
 
 <div class="well">
 <h3>House's Hand:</h3>
-  <% session[:house_hand].each do |card| %>
+  <% session[:house_hand].each_with_index do |card,i| %>
+      <% if session[:whose_turn] == "player" && i == 0%>
+          <img src='/images/cards/cover.jpg' class='card_image'>
+          <% else %>
       <%= card_image(card) %>
+          <% end %>
   <% end %>
 
 <h4>The house has a total hand of <%= session[:house_hand_total] %>.</h4>
@@ -105,7 +109,14 @@
     <input class="btnbj" type="button" onclick="myDealerFunction()" value="Dealer's Turn">
 <% end %>
 
+<% if session[:game_over] == true %>
+    <input class="btnbj" type="button" onclick="myPlayAgainFunction()" value="Click to play again">
+<% end %>
+
+
+
 <input class="btnbj" type="button" onclick="myQuitFunction()" value="Quit ">
+
 <form id="HitForm" action="form_player_hit" method = "post">
 
 </form>
@@ -119,6 +130,10 @@
 </form>
 
 <form id="DealerForm" action="form_dealer_button" method = "post">
+
+</form>
+
+<form id="PlayAgainForm" action="form_playitagainsam" method = "post">
 
 </form>
 
@@ -146,5 +161,9 @@
         document.getElementById("DealerForm").submit();
     }
 </script>
-
+<script>
+    function myPlayAgainFunction() {
+        document.getElementById("PlayAgainForm").submit();
+    }
+</script>
 
