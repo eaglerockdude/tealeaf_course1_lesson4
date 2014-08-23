@@ -1,0 +1,83 @@
+<style type="text/css">
+    h1 {color: blue;}
+    h2 {color: blue; }
+    h3 {color: #000000;}
+    h4 {color: #000000;}
+    .makered {color: red;}
+    h5 {background-color: yellow; color: blue;}
+    li {color:#dc143c;font: "Courier New";font-size: 18px; font-weight: bold;}
+    .btnbj {
+        -moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+        -webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+        box-shadow:inset 0px 1px 0px 0px #f5978e;
+        background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) );
+        background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f');
+        background-color:#f24537;
+        -webkit-border-top-left-radius:20px;
+        -moz-border-radius-topleft:20px;
+        border-top-left-radius:20px;
+        -webkit-border-top-right-radius:20px;
+        -moz-border-radius-topright:20px;
+        border-top-right-radius:20px;
+        -webkit-border-bottom-right-radius:20px;
+        -moz-border-radius-bottomright:20px;
+        border-bottom-right-radius:20px;
+        -webkit-border-bottom-left-radius:20px;
+        -moz-border-radius-bottomleft:20px;
+        border-bottom-left-radius:20px;
+        text-indent:0;
+        border:1px solid #d02718;
+        display:inline-block;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:17px;
+        font-weight:bold;
+        font-style:normal;
+        height:28px;
+        line-height:28px;
+        width:82px;
+        text-decoration:none;
+        text-align:center;
+        text-shadow:1px 1px 0px #810e05;
+    }
+    .btnbj:hover {
+        background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
+        background:-moz-linear-gradient( center top, #c62d1f 5%, #f24537 100% );
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537');
+        background-color:#c62d1f;
+    }.btnbj:active {
+         position:relative;
+         top:1px;
+     }
+
+    .Three-Dee{
+        font-family: 'Courier New', cursive;
+        line-height: 1em;
+        color: red;
+        font-weight:bold;
+        font-size: 65px;
+        text-shadow:0px 0px 0 rgb(206,206,206),1px 1px 0 rgb(168,168,168),2px 2px 0 rgb(129,129,129),3px 3px 0 rgb(90,90,90),4px 4px 0 rgb(52,52,52),5px 5px 0 rgb(13,13,13), 6px 6px 0 rgb(-26,-26,-26),7px 7px 6px rgba(0,0,0,0.45),7px 7px 1px rgba(0,0,0,0.5),0px 0px 6px rgba(0,0,0,.2);}
+
+</style>
+
+<h2 class="Three-Dee">Welcome to BlackJack!</h2>
+<form action='/new_player_validate' method='post'>
+  <fieldset>
+    <h3>GamePlay overview</h3>
+    <h4>Blackjack is a game of the player(you in this case) vs. the Dealer(or House).</h4>
+    <h4>The goal of Blackjack is to achieve ideally a card total of 21 or "Blackjack."</h4>
+    <h4>To start the game, each player(including the House) will be dealt two cards.</h4>
+    <h4>Cards optionally will be dealt to the player until such time he/she either chooses to</h4>
+    <h4>Stand(stand pat..no more cards), Busts(total hand value exceeds 21), or gets Blackjack(a total of 21).</h4>
+    <h4>At that point it becomes the dealers turn, basically repeating the same process.</h4>
+    <h4>Face cards(J,K,Q) are worth 10, with the exception of an Ace which can be either 11 or 1.</h4>
+    <h4>All other cards are worth their pip value.</h4>
+    <h4>The dealer must hit for a hand total of 16 or under. In this game the dealer may or may not stand at 17. He plays to win.</h4>
+    <br>
+    <h4>What will be your player name to start the game? (required entry)</h4>
+    <input type="text" name="username" placeholder="Enter a name" >
+    <br/>
+    <button type="submit" class="btnbj">Submit</button>
+  </fieldset>
+</form>
