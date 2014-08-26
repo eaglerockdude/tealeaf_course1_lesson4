@@ -1,4 +1,4 @@
-tealeaf_course1_lesson3
+tealeaf_course1_lesson4
 =======================
 
-repo for lesson 3 exercises
+repo for lesson 4 exercises
