@@ -8,6 +8,7 @@ set :sessions, true
 
 helpers do
 
+
   def card_image(card)
     count = 0
     suit = case card[0]
@@ -147,6 +148,16 @@ helpers do
 
   end
 
+  def is_a_number?(s)
+    s.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
+  end
+
+
+  def set_player_bank(player_bet)
+    session[:player_bank]  = session[:player_bank].to_i - player_bet.to_i
+  end
+
+
 end  # helper do
 
 # entry point into the game is root.
@@ -167,11 +178,45 @@ post '/new_player_validate' do
 
   if params[:username] =~ /\w/
        session[:username] = params[:username]
-       redirect '/start_game'
+       #redirect '/start_game'
+       redirect '/place_bet'
   else
        @error = "Please enter your player name to start the game."
        erb :form_new_player
   end
+end
+
+get  '/place_bet' do
+  session[:player_bank]    = 500
+  session[:betamt]         = 0
+  erb :place_bet
+end
+
+post '/place_bet_validate' do
+
+  @error = ""
+
+  if is_a_number?(params[:betamt])
+
+    session[:betamt] = params[:betamt]
+
+    if session[:betamt].to_i > session[:player_bank].to_i
+      @error = "You cannot wager more than you currently have."
+      erb :place_bet
+    elsif
+    session[:betamt].to_i < 0
+      @error = "You cannot wager a negative amount..but it would be nice!"
+      erb :place_bet
+    else
+      set_player_bank(session[:betamt])
+      redirect '/start_game'
+    end
+
+  else
+    @error = "Bet amount is invalid. Must be numeric."
+    erb :place_bet
+  end
+
 end
 
 get '/start_game' do
@@ -189,9 +234,6 @@ get '/start_game' do
   session[:player_hand] << session[:deck].pop
   session[:house_hand]  << session[:deck].pop
 
-  session[:player_bank]    = 500
-  session[:player_balance] = 0
-
   session[:player_stands] = false
   session[:house_stands]  = false
 
@@ -208,7 +250,9 @@ get '/start_game' do
   session[:first_time_here] = true
 
   redirect '/game_show'
+
 end
+
 
 get '/game_show'  do
 
