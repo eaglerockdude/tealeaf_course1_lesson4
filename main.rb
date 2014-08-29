@@ -264,6 +264,7 @@ get '/start_game' do
   session[:winner]  = false
 
   session[:first_time_here] = true
+  session[:show_dealer_button] = false
 
   redirect '/game_show'
 
@@ -282,7 +283,7 @@ get '/game_show'  do
         session[:game_over]  = true
         session[:whose_turn]  = "dealer"
         @hide_buttons = true
-        @show_dealer_button = false
+        session[:show_dealer_button] = false
         @game_show_message = @game_status[1]
         @game_show_message = "As luck would have it, you lost right out of the starting gate!"
         session[:whose_turn] = "gameover"
@@ -297,24 +298,24 @@ get '/game_show'  do
 
       if @player_status == "in-play"
         @hide_buttons = false
-        @show_dealer_button = false
+        session[:show_dealer_button] = false
         @game_show_message = "GAME OPTIONS : HIT for another card / STAND to hold / QUIT to exit game."
 
       elsif @player_status == "stand"
         @hide_buttons = true
-        @show_dealer_button = true
+        session[:show_dealer_button] = true
         session[:whose_turn]  = "dealer"
         @game_show_message = "You have chosen to Stand. It is now the Dealer's play.  Click button."
 
       elsif @player_status == "BLACKJACK"
         @hide_buttons = true
-        @show_dealer_button = true
+        session[:show_dealer_button] = true
         session[:whose_turn]  = "dealer"
         @game_show_message = "You currently are holding a Blackjack hand. It is now the Dealer's play. Click button."
 
       elsif @player_status == "BUSTED"
         @hide_buttons = true
-        @show_dealer_button = true
+        session[:show_dealer_button] = true
         session[:whose_turn]  = "dealer"
         @game_show_message = "You have Busted at this point.  It is now the Dealer's play.  Click the Dealer button."
       end
@@ -328,13 +329,13 @@ get '/game_show'  do
         if @house_next_play == "hit"
 
           session[:house_hand]  << session[:deck].pop
-          @show_dealer_button = false
+          session[:show_dealer_button] = false
           @hide_buttons = true
 
         elsif  @house_next_play == "stand"
           session[:house_stands] = true
           session[:game_over] = true
-          @show_dealer_button = false
+          session[:show_dealer_button] = false
           @hide_buttons = true
        end
 
@@ -345,7 +346,7 @@ get '/game_show'  do
         @game_status = check_game_status
           if @game_status[0] != "x"
              session[:game_over] = true
-             @show_dealer_button = false
+             session[:show_dealer_button] = false
              @hide_buttons = true
              @game_show_message = @game_status[1]
           end

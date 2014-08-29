@@ -86,7 +86,7 @@
           <% end %>
   <% end %>
 
- <% if @show_dealer_button %>
+ <% if session[:show_dealer_button] == true%>
 <h4>The house has a total hand of <%= session[:house_hand_total] %>.</h4>
  <% end %>
 <h4>House current status : <%= @house_status %></h4>
@@ -117,7 +117,7 @@
     <input id="btn_stand" class="btnbj" type="button" onclick="myStandFunction()" value="Stand">
 <% end %>
 
-<% if @show_dealer_button %>
+<% if session[:show_dealer_button] == true %>
     <input id = "btn_dealer" class="btnbj" type="button" onclick="myDealerFunction()" value="Dealer's Turn">
 <% end %>
 

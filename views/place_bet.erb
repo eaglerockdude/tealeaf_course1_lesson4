@@ -62,7 +62,7 @@
 </style>
 
 <img class = "logo"src="/images/blackjack-logo.jpg">
-<h2 class="Three-Dee">Blackjack..Place your Bet!</h2>
+<h2 class="Three-Dee"><%= session[:username] %>...Place your Bet!</h2>
 
 
 <form action='/place_bet_validate' method='post'>
