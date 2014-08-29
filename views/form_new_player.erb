@@ -56,11 +56,12 @@
         line-height: 1em;
         color: red;
         font-weight:bold;
-        font-size: 65px;
+        font-size: 45px;
         text-shadow:0px 0px 0 rgb(206,206,206),1px 1px 0 rgb(168,168,168),2px 2px 0 rgb(129,129,129),3px 3px 0 rgb(90,90,90),4px 4px 0 rgb(52,52,52),5px 5px 0 rgb(13,13,13), 6px 6px 0 rgb(-26,-26,-26),7px 7px 6px rgba(0,0,0,0.45),7px 7px 1px rgba(0,0,0,0.5),0px 0px 6px rgba(0,0,0,.2);}
 
 </style>
 
+<img class = "logo" src="/images/blackjack-logo.jpg">
 <h2 class="Three-Dee">Welcome to BlackJack!</h2>
 <form action='/new_player_validate' method='post'>
   <fieldset>
@@ -74,6 +75,7 @@
     <h4>Face cards(J,K,Q) are worth 10, with the exception of an Ace which can be either 11 or 1.</h4>
     <h4>All other cards are worth their pip value.</h4>
     <h4>The dealer must hit for a hand total of 16 or under. In this game the dealer may or may not stand at 17. He plays to win.</h4>
+    <h4>In it's unparalleled generosity, the casino has given you $500 in chips to play with. It's chump change to us.</h4>
     <br>
     <h4>What will be your player name to start the game? (required entry)</h4>
     <input type="text" name="username" placeholder="Enter a name" >
@@ -81,3 +83,5 @@
     <button type="submit" class="btnbj">Submit</button>
   </fieldset>
 </form>
+
+<div>

@@ -1,5 +1,5 @@
-# ken mcfadden tealeaf course1 lesson 3
-# Sinatra blackjack
+# ken mcfadden tealeaf course1 lesson 4
+# Web Blackjack with Sinatra and Ajax
 
 require 'sinatra'
 require 'pry'
@@ -118,30 +118,39 @@ helpers do
     if  session[:house_hand_total] == 21 && session[:player_hand_total] == 21
         @game_status[0] = "0" #push
         @game_status[1] = "Games ends in a push. Both house and player have Blackjack!"
+        set_player_bank(session[:betamt],"push")
     elsif
         session[:house_hand_total] >= 22 and session[:player_hand_total] >= 22
         @game_status[0] =  "0"  #push
         @game_status[1] = "Games ends in a push. Both house and player have Busted!"
+        set_player_bank(session[:betamt],"push")
     elsif
         session[:player_hand_total] == 21
         @game_status[0] =  "1"
         @game_status[1] = "Player wins! Blackjack!"
+        set_player_bank(session[:betamt],"win")
+        session[:winner]  = true
     elsif
         session[:house_hand_total] == 21
          @game_status[0] =  "2"
          @game_status[1] = "House wins! Blackjack!"
+         set_player_bank(session[:betamt],"lose")
+         session[:winner]  = true
     elsif
         session[:player_hand_total] >= 22
         @game_status[0] = "3"
         @game_status[1] = "House wins on player Bust!"
+        set_player_bank(session[:betamt],"lose")
     elsif
     session[:house_hand_total] >= 22
         @game_status[0] =  "4"
         @game_status[1] = "Player wins on house Bust!"
+        set_player_bank(session[:betamt],"win")
     elsif
     session[:player_stands] == true && session[:house_hand_total] > session[:player_hand_total]
          @game_status[0] =  "5"
          @game_status[1] = "House wins with greater total hand!"
+         set_player_bank(session[:betamt],"lose")
      end
 
     @game_status
@@ -152,9 +161,16 @@ helpers do
     s.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
   end
 
+  def set_player_bank(player_bet,action)
 
-  def set_player_bank(player_bet)
-    session[:player_bank]  = session[:player_bank].to_i - player_bet.to_i
+    if action == "win"
+      session[:player_bank]  +=  player_bet.to_i
+    elsif action == "lose"
+      session[:player_bank]  -=  player_bet.to_i
+    else action == "push"
+      end
+
+    return session[:player_bank]
   end
 
 
@@ -179,6 +195,7 @@ post '/new_player_validate' do
   if params[:username] =~ /\w/
        session[:username] = params[:username]
        #redirect '/start_game'
+       session[:player_bank]    = 500
        redirect '/place_bet'
   else
        @error = "Please enter your player name to start the game."
@@ -187,8 +204,7 @@ post '/new_player_validate' do
 end
 
 get  '/place_bet' do
-  session[:player_bank]    = 500
-  session[:betamt]         = 0
+      session[:betamt]         = 0
   erb :place_bet
 end
 
@@ -201,14 +217,13 @@ post '/place_bet_validate' do
     session[:betamt] = params[:betamt]
 
     if session[:betamt].to_i > session[:player_bank].to_i
-      @error = "You cannot wager more than you currently have."
+      @error = "You cannot wager more than you currently have in the bank."
       erb :place_bet
     elsif
     session[:betamt].to_i < 0
-      @error = "You cannot wager a negative amount..but it would be nice!"
+      @error = "You cannot wager a negative amount..you may bet zero if u like!"
       erb :place_bet
     else
-      set_player_bank(session[:betamt])
       redirect '/start_game'
     end
 
@@ -246,6 +261,7 @@ get '/start_game' do
   session[:whose_turn] = "player"
 
   session[:game_over]  = false
+  session[:winner]  = false
 
   session[:first_time_here] = true
 
@@ -270,6 +286,7 @@ get '/game_show'  do
         @game_show_message = @game_status[1]
         @game_show_message = "As luck would have it, you lost right out of the starting gate!"
         session[:whose_turn] = "gameover"
+        session[:winner]  = true
     end
   end
 
@@ -365,7 +382,8 @@ post '/form_player_quit' do
 end
 
 post '/form_playitagainsam' do
-  redirect '/start_game'
+  #redirect '/start_game'
+  redirect '/place_bet'
 end
 
 not_found do
